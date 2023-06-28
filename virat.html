@@ -27,15 +27,27 @@
     }
   </style>
   <script>
+    const getTagWithCount = (tag) => {
+      return document.getElementsByTagName(tag).length;
+    }
+
+    const generateStats = () => {
+      const tags = ['div', 'span', 'p', 'h1', 'h6', 'article', 'table', 'main', 'section', 'script', 'html', 'body', 'head', 'style', 'link' ];
+      const countsOfTags = [];
+      tags.forEach((tag) => {
+        countsOfTags.push(getTagWithCount(tag));
+      });
+      const stats = tags.map((tag, index) => {
+        return `${tag}:${countsOfTags[index]}`
+      }).join('\n');
+
+      return stats;
+    }
+
     window.onload = () => {
-      document.getElementById("page-stats").innerText = "Computing Page Stats...";
       setTimeout(() => {
-        const stats = { div: 0, span: 0, p: 0, h1: 0, h6: 0, article: 0, table: 0, main: 0, section: 0, script: 0, html: 0, body: 0, head: 0, style: 0, link: 0 };
-        Object.keys(stats).forEach((element) => {
-          stats[element] = document.querySelectorAll(element).length;
-        })
-        const statsInHtml = Object.entries(stats).map((selectorStat) => { return selectorStat.join(':') }).join('\n');
-        document.getElementById("page-stats").innerText = statsInHtml;
+        
+        document.getElementById('page-stats').innerText = generateStats();
       }, 2000);
     }
   </script>
